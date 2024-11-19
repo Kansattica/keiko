@@ -6,6 +6,7 @@
 }: {
   imports = [
     ./sd-image.nix
+    ./ap-configuration.nix
   ];
 
   # Some packages (ahci fail... this bypasses that) https://discourse.nixos.org/t/does-pkgs-linuxpackages-rpi3-build-all-required-kernel-modules/42509
@@ -70,12 +71,23 @@
       interfaces = ["wlan0"];
       # ! Change the following to connect to your own network
       networks = {
-        "<ssid>" = {
-          psk = "<ssid-key>";
+        "My Autumnal Clutches" = {
+          psk = "Somethingeasytoremember";
         };
       };
     };
   };
+
+  environment.systemPackages = with pkgs; [
+    git
+    wget
+    curl
+    killall
+    powertop
+    vim
+    bb
+  ];
+
 
   # Enable OpenSSH out of the box.
   services.sshd.enable = true;
@@ -84,13 +96,14 @@
   services.timesyncd.enable = true;
 
   # ! Change the following configuration
-  users.users.bob = {
+  users.users.grace = {
     isNormalUser = true;
-    home = "/home/bob";
-    description = "Bob";
+    home = "/home/grace";
+    description = "Grace";
     extraGroups = ["wheel" "networkmanager"];
     # ! Be sure to put your own public key here
-    openssh.authorizedKeys.keys = ["a public key"];
+    openssh.authorizedKeys.keys = ["ssh-ed25519 AAAAC3NzaC1lZDI1NTE5AAAAIOPYgLe8xPnT4kzEBghYZCjHRQk9eT/7k8ssArIpsgqo"];
+    initialHashedPassword = "$y$j9T$9aaXSQ8qJG2PyYJhN1aV10$25gbAZUwj2RUegypQIqhKHz/VGnRoxtBVTNVLMnfEQB";
   };
 
   security.sudo = {
@@ -98,5 +111,5 @@
     wheelNeedsPassword = false;
   };
   # ! Be sure to change the autologinUser.
-  services.getty.autologinUser = "bob";
+  services.getty.autologinUser = "grace";
 }

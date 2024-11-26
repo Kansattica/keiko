@@ -1,6 +1,8 @@
+# NixOS Captive Portal and Website To Put Inside A Plush Dragon
+
 # Building a NixOS SD image for a Raspberry Pi Zero 2 w
 
-1. Update `zero2w.nix`
+1. Update `keiko.nix`
 
 In particular, don't forget:
 - to configure your wifi
@@ -8,14 +10,14 @@ In particular, don't forget:
 
 2. Build the image
 ```sh
-nix build -L .#nixosConfigurations.zero2w.config.system.build.sdImage
+nix build -L .#nixosConfigurations.keiko.config.system.build.sdImage
 ```
 
 3. Copy the image in your sd card
 
 ```sh
 DEVICE=/dev/disk5 # Whatever your sd card reader is
-sudo dd if=result/sd-image/zero2.img of=$DEVICE bs=1M conv=fsync status=progress
+sudo dd if=result/sd-image/keiko.img of=$DEVICE bs=1M conv=fsync status=progress
 ```
 
 4. Boot your Zero
@@ -29,7 +31,7 @@ ifconfig wlan0
 ```sh
 ZERO2_IP=<the-zero2-ip>
 SSH_USER=<the-admin-user-in-the-pi>
-nix run github:serokell/deploy-rs .#zero2w -- --ssh-user $SSH_USER --hostname $ZERO2_IP
+nix run github:serokell/deploy-rs .#keiko-- --ssh-user $SSH_USER --hostname $ZERO2_IP
 ```
 
 ## Notes

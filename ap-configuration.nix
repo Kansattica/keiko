@@ -17,8 +17,6 @@
 	# hopefully allow kiwix to bind to port 80
 	boot.kernel.sysctl."net.ipv4.ip_unprivileged_port_start" = 0;
 
-  networking.hostName = "wikipetan"; # Define your hostname.
-
   services.openssh = {
     enable = true;
     ports = [ 22 ];
@@ -39,45 +37,11 @@
 
   programs.screen.enable = true;
 
-  environment.systemPackages = with pkgs; [
-    htop
-    wget
-    curl
-		git
-  ((vim_configurable.override {  }).customize{
-      name = "vim";
-      # Install plugins for example for syntax highlighting of nix files
-      vimrcConfig.packages.myplugins = with pkgs.vimPlugins; {
-        start = [ vim-nix vim-surround ];
-        opt = [];
-      };
-      vimrcConfig.customRC = ''
-        set nocompatible
-        " Turn on syntax highlighting by default
-        syntax on
-	set backspace=indent,eol,start
-	set mouse=
-	set tabstop=2
-	set shiftwidth=2
-      '';
-    }
-  )
-
-  ];
-
   nix.gc = {
     automatic = true;
     dates = "weekly";
     options = "--delete-older-than 7d";
   };
-
-  nix.settings.substituters = [
-    "https://cache.lix.systems"
-  ];
-
-  nix.settings.trusted-public-keys = [
-    "cache.lix.systems:aBnZUw8zA7H35Cz2RyKFVs3H4PlGTLawyY5KRbvJR8o="
-  ];
 
   nix.settings.experimental-features = ["nix-command" "flakes"];
 
@@ -104,7 +68,7 @@
   # networking.wireless.enable = true;  # Enables wireless support via wpa_supplicant.
   #networking.networkmanager.enable = true;  # Easiest to use and most distros use this by default.
 
-  networking.networkmanager.unmanaged = [ "interface-name:wlp*" ]
+/*  networking.networkmanager.unmanaged = [ "interface-name:wlp*" ]
 	  ++ lib.optional config.services.hostapd.enable "interface-name:${config.services.hostapd.interface}";
 
 
@@ -114,7 +78,7 @@
 			"/etc/zims/wikipedia_en_all_maxi_2024-01.zim"
 		];
 		port = 80;
-	};
+	};*/
 
   # Set your time zone.
   # time.timeZone = "Europe/Amsterdam";

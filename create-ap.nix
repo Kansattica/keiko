@@ -1,18 +1,21 @@
-{ lib, pkgs, ... }:
+{ lib, pkgs, config, ... }:
 {
 	services.haveged.enable = true;
 	services.create_ap = {
 		enable = true;
 		settings = {
-			INTERNET_IFACE = "enp0s31f6";
-			WIFI_IFACE = "wlp1s0";
-	    SSID = "Wikipetan!";
+			INTERNET_IFACE = "enu1";
+			WIFI_IFACE = "wlan0";
+            SSID = "Keikonet";
 			COUNTRY = "US";
 			NO_DNSMASQ = 1;
-			ISOLATE_CLIENTS = 1;
+			ISOLATE_CLIENTS = 0;
 			GATEWAY = "10.0.0.1";
 		};
 	};
+
+  networking.networkmanager.unmanaged = [ "interface-name:wlp*" ]
+	  ++ lib.optional config.services.hostapd.enable "interface-name:${config.services.hostapd.interface}";
 
 	services.dnsmasq = {
 		enable = true;

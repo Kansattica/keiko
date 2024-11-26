@@ -4,7 +4,7 @@
 	services.create_ap = {
 		enable = true;
 		settings = {
-			INTERNET_IFACE = "enu1";
+			INTERNET_IFACE = "lo";
 			WIFI_IFACE = "wlan0";
             SSID = "Keikonet";
 			COUNTRY = "US";
@@ -36,6 +36,13 @@
 
 	};
 
-	networking.firewall.allowedUDPPorts = [53 67];
+    # dnsmasq gets mad if the wlan0 interface it expects doesn't exist
+    systemd.services.dnsmasq.after = [ config.systemd.services.create_ap.name ];
+    systemd.services.dnsmasq.requires = [ config.systemd.services.create_ap.name ];
+    systemd.services.dnsmasq.serviceConfig = {
+      RestartSec = 5;
+    };
 
-}
+    networking.firewall.allowedUDPPorts = [53 67];
+
+  }

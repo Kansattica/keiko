@@ -27,7 +27,7 @@
 			local-ttl = 30;
 
 			dhcp-range = [ "10.0.0.2,10.0.0.254" ];
-			interface = "ap0";
+			interface = "wlan0";
 			bind-interfaces = true;
 			address = "/#/10.0.0.1";
 		};

@@ -29,12 +29,6 @@
   nix.settings.trusted-users = ["@wheel"];
   system.stateVersion = "24.05";
 
-  nix.gc = {
-    automatic = true;
-    dates = "daily";
-    options = "--delete-older-than 1d";
-  };
-
   zramSwap = {
     enable = true;
     algorithm = "zstd";
@@ -103,6 +97,14 @@
     elinks
     lsof
 
+    bastet
+    nethack
+    ninvaders
+    nsnake
+    nbsdgames
+    moon-buggy
+    nudoku
+
     nano
     emacs
     ((vim_configurable.override {  }).customize{
@@ -123,6 +125,25 @@
       '';
     }
     )
+
+    (ponysay.overrideAttrs ( oldAttrs: rec {
+      src = pkgs.fetchFromGitHub {
+        owner = "Tonyl314";
+        repo = "ponysay";
+        rev = "f7231e17c137a8600dce2a9c62b65eaed342979e";
+        hash = "sha256-xs5blffoht+PolqRf2hPH0TO5U6UacxTf4J5u5/0Nvs=";
+      };
+      installPhase = ''
+        runHook preInstall
+
+      '' +  (oldAttrs.installPhase or "") + ''
+
+        runHook postInstall
+      '';
+      postInstall = (oldAttrs.postInstall or "") + ''
+        rm -fv $out/share/ponysay/ponies/{sindy,powderrouge}.pony
+      '';
+    }))
   
   ];
 
@@ -132,6 +153,8 @@
 
   # NTP time sync.
   services.timesyncd.enable = true;
+
+  users.motd = "\nWelcome to Keiko! Don't forget to sign our guestbook at /var/www/website/index.html \n\n";
 
   # ! Change the following configuration
   users.users.grace = {
@@ -149,7 +172,7 @@
     home = "/home/hoshiko";
     description = "Mahou Shoujo";
     # ! Be sure to put your own public key here
-    openssh.authorizedKeys.keys = ["ssh-ed25519 AAAAC3NzaC1lZDI1NTE5AAAAIOPYgLe8xPnT4kzEBghYZCjHRQk9eT/7k8ssArIpsgqo"];
+    #openssh.authorizedKeys.keys = ["ssh-ed25519 AAAAC3NzaC1lZDI1NTE5AAAAIOPYgLe8xPnT4kzEBghYZCjHRQk9eT/7k8ssArIpsgqo"];
     initialPassword = "fuckweyland";
   };
 

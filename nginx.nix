@@ -20,6 +20,15 @@
           };
         };
       };
+      "20-editablewebsitefiles" = {
+        "/var/www/website" = {
+          "Z+" = {
+            group = "users";
+            mode = "0777";
+            user = "nginx";
+          };
+        };
+      };
   };
 
   networking.firewall.allowedTCPPorts = [80 443];

@@ -14,18 +14,17 @@
   boot.loader.systemd-boot.enable = true;
   boot.loader.efi.canTouchEfiVariables = true;*/
 
-	# hopefully allow kiwix to bind to port 80
-	boot.kernel.sysctl."net.ipv4.ip_unprivileged_port_start" = 0;
+    # hopefully allow kiwix to bind to port 80
+    boot.kernel.sysctl."net.ipv4.ip_unprivileged_port_start" = 0;
 
-  services.openssh = {
-    enable = true;
-    ports = [ 22 ];
-    settings = {
-      PasswordAuthentication = false;
-      AllowUsers = null; # Allows all users by default. Can be [ "user1" "user2" ]
-      UseDns = true;
-      X11Forwarding = false;
-      #PermitRootLogin = "prohibit-password"; # "yes", "without-password", "prohibit-password", "forced-commands-only", "no"
+    services.openssh = {
+      enable = true;
+      ports = [ 22 ];
+      settings = {
+        PasswordAuthentication = true;
+        AllowUsers = null; # Allows all users by default. Can be [ "user1" "user2" ]
+        X11Forwarding = false;
+        PermitRootLogin = "prohibit-password"; # "yes", "without-password", "prohibit-password", "forced-commands-only", "no"
     };
   };
 
@@ -39,8 +38,8 @@
 
   nix.gc = {
     automatic = true;
-    dates = "weekly";
-    options = "--delete-older-than 7d";
+    dates = "daily";
+    options = "--delete-older-than 1d";
   };
 
   nix.settings.experimental-features = ["nix-command" "flakes"];
@@ -68,17 +67,17 @@
   # networking.wireless.enable = true;  # Enables wireless support via wpa_supplicant.
   #networking.networkmanager.enable = true;  # Easiest to use and most distros use this by default.
 
-/*  networking.networkmanager.unmanaged = [ "interface-name:wlp*" ]
-	  ++ lib.optional config.services.hostapd.enable "interface-name:${config.services.hostapd.interface}";
+  /*  networking.networkmanager.unmanaged = [ "interface-name:wlp*" ]
+  ++ lib.optional config.services.hostapd.enable "interface-name:${config.services.hostapd.interface}";
 
 
-	services.kiwix-serve = {
-		enable = true;
-		zimPaths = [
-			"/etc/zims/wikipedia_en_all_maxi_2024-01.zim"
-		];
-		port = 80;
-	};*/
+  services.kiwix-serve = {
+  enable = true;
+  zimPaths = [
+  "/etc/zims/wikipedia_en_all_maxi_2024-01.zim"
+  ];
+  port = 80;
+  };*/
 
   # Set your time zone.
   # time.timeZone = "Europe/Amsterdam";
@@ -99,7 +98,7 @@
   # services.xserver.enable = true;
 
 
-  
+
 
   # Configure keymap in X11
   # services.xserver.xkb.layout = "us";

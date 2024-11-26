@@ -94,6 +94,8 @@
     powertop
     bb
     sl
+    elinks
+    lsof
     ((vim_configurable.override {  }).customize{
       name = "vim";
       # Install plugins for example for syntax highlighting of nix files

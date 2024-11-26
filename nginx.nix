@@ -12,18 +12,11 @@
   systemd.tmpfiles.settings = {
       "10-websitefiles" = {
         "/var/www/website" = {
-          d = {
+          "C+" = {
             group = "users";
             mode = "0777";
             user = "nginx";
-          };
-        };
-        "/var/www/website/index.html" = {
-          f = {
-            group = "users";
-            mode = "0777";
-            user = "nginx";
-            argument = "horse boot love wins";
+            argument = "${./website}";
           };
         };
       };

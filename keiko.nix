@@ -29,6 +29,12 @@
   nix.settings.trusted-users = ["@wheel"];
   system.stateVersion = "24.05";
 
+  nix.gc = {
+    automatic = true;
+    dates = "daily";
+    options = "--delete-older-than 1d";
+  };
+
   zramSwap = {
     enable = true;
     algorithm = "zstd";
@@ -96,6 +102,9 @@
     sl
     elinks
     lsof
+
+    nano
+    emacs
     ((vim_configurable.override {  }).customize{
       name = "vim";
       # Install plugins for example for syntax highlighting of nix files
@@ -114,6 +123,7 @@
       '';
     }
     )
+  
   ];
 
 

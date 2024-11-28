@@ -71,8 +71,8 @@
       interfaces = ["wlan0"];
       # ! Change the following to connect to your own network
       networks = {
-        "My Autumnal Clutches" = {
-          psk = "Somethingeasytoremember";
+        "cool network" = {
+          psk = "pingus zingus";
         };
       };
     };
@@ -94,17 +94,6 @@
 
   # NTP time sync.
   services.timesyncd.enable = true;
-
-  # ! Change the following configuration
-  users.users.grace = {
-    isNormalUser = true;
-    home = "/home/grace";
-    description = "Grace";
-    extraGroups = ["wheel" "networkmanager"];
-    # ! Be sure to put your own public key here
-    openssh.authorizedKeys.keys = ["ssh-ed25519 AAAAC3NzaC1lZDI1NTE5AAAAIOPYgLe8xPnT4kzEBghYZCjHRQk9eT/7k8ssArIpsgqo"];
-    initialHashedPassword = "$y$j9T$9aaXSQ8qJG2PyYJhN1aV10$25gbAZUwj2RUegypQIqhKHz/VGnRoxtBVTNVLMnfEQB";
-  };
 
   security.sudo = {
     enable = true;

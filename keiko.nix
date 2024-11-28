@@ -71,20 +71,6 @@
     swraid.enable = lib.mkForce false;
   };
 
-  /*networking = {
-    interfaces."wlan0".useDHCP = true;
-    wireless = {
-      enable = true;
-      interfaces = ["wlan0"];
-      # ! Change the following to connect to your own network
-      networks = {
-        "My Autumnal Clutches" = {
-          psk = "Somethingeasytoremember";
-        };
-      };
-    };
-  };*/
-
   environment.systemPackages = with pkgs; [
     git
     htop

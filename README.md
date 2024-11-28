@@ -1,5 +1,13 @@
 # NixOS Captive Portal and Website To Put Inside A Plush Dragon
 
+Based on https://github.com/plmercereau/nixos-pi-zero-2 but:
+
+- Creates a wifi access point
+- Uses dnsmasq to create a captive portal redirecting to:
+- Nginx, running a guestbook website and advice
+
+Adventurous users can also ssh in and explore the games and such.
+
 # Building a NixOS SD image for a Raspberry Pi Zero 2 w
 
 1. Update `keiko.nix`

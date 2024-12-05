@@ -5,6 +5,7 @@
     virtualHosts."home" = {
       root = "/var/www/website/";
       default = true;
+      extraConfig = "error_page 404 403 500 503 /index.html;";
     };
 
   };

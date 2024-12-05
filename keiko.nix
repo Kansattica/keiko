@@ -119,15 +119,26 @@
         rev = "f7231e17c137a8600dce2a9c62b65eaed342979e";
         hash = "sha256-xs5blffoht+PolqRf2hPH0TO5U6UacxTf4J5u5/0Nvs=";
       };
+
+      # this double-corrects a bug that tony also fixed, i think
       installPhase = ''
         runHook preInstall
 
-      '' +  (oldAttrs.installPhase or "") + ''
+        find -type f -name "*.py" | xargs sed -i "s@/usr/bin/env python3@$python3/bin/python3@g"
+        substituteInPlace setup.py --replace \
+            "fileout.write(('#!/usr/bin/env %s\n' % env).encode('utf-8'))" \
+            "fileout.write(('#!%s/bin/%s\n' % (os.environ['python3'], env)).encode('utf-8'))"
+
+        python3 setup.py --prefix=$out --freedom=partial install \
+            --with-shared-cache=$out/share/ponysay \
+            --with-bash
 
         runHook postInstall
       '';
+      
       postInstall = (oldAttrs.postInstall or "") + ''
-        rm -fv $out/share/ponysay/ponies/{sindy,powderrouge}.pony
+         rm -vf $out/share/ponysay/ponies/{sindy,powderrouge}.pony
+         rm -vf $out/share/ponysay/ttyponies/{sindy,powderrouge}.pony
       '';
     }))
   
